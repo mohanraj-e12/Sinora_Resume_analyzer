@@ -17,3 +17,5 @@ matplotlib
 reportlab
 bcrypt
 werkzeug
+gunicorn==23.0.0
+
