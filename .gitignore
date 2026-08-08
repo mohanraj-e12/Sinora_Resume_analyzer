@@ -1,8 +1,21 @@
 node_modules/
 build/
 dist/
-coverage/
+coverage
 .DS_Store
 *.log
+
 .env*
 !.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# SQLite database
+*.db
+*.sqlite
+*.sqlite3
+instance/
