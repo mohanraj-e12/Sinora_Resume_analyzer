@@ -1,0 +1,6 @@
+{
+  "name": "Sinora AI - Resume Analyzer",
+  "description": "Precision AI-powered resume analyzer, ATS scoring engine, skill gap detector, and cohort management dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

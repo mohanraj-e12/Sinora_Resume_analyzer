@@ -1,0 +1,4 @@
+Bob Ross
+Frontend Developer with React, TypeScript, and Tailwind CSS.
+Email: bob.ross@example.com
+Phone: (555) 876-5432

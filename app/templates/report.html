@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Analysis Report - Sinora AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          "colors": {
+                  "primary": "#4f46e5",
+                  "background": "#f8faff",
+                  "on-tertiary": "#ffffff",
+                  "tertiary-fixed": "#d1fae5",
+                  "inverse-surface": "#1e293b",
+                  "on-tertiary-container": "#065f46",
+                  "surface-container": "#ffffff",
+                  "on-primary-container": "#312e81",
+                  "error": "#ef4444",
+                  "surface-container-lowest": "#ffffff",
+                  "surface-container-highest": "#e2e8f0",
+                  "outline-variant": "#e2e8f0",
+                  "surface-dim": "#f1f5f9",
+                  "error-container": "#fee2e2",
+                  "secondary": "#0284c7",
+                  "on-error-container": "#991b1b",
+                  "primary-container": "#e0e7ff",
+                  "secondary-container": "#e0f2fe",
+                  "on-secondary": "#ffffff",
+                  "on-error": "#ffffff",
+                  "outline": "#cbd5e1",
+                  "on-secondary-fixed-variant": "#0369a1",
+                  "on-tertiary-fixed": "#064e3b",
+                  "secondary-fixed": "#bae6fd",
+                  "primary-fixed-dim": "#c7d2fe",
+                  "on-tertiary-fixed-variant": "#047857",
+                  "inverse-primary": "#818cf8",
+                  "surface-variant": "#f1f5f9",
+                  "tertiary": "#059669",
+                  "surface-bright": "#ffffff",
+                  "secondary-fixed-dim": "#7dd3fc",
+                  "on-secondary-container": "#075985",
+                  "on-primary-fixed": "#1e1b4b",
+                  "on-surface": "#0f172a",
+                  "on-secondary-fixed": "#0c4a6e",
+                  "tertiary-fixed-dim": "#6ee7b7",
+                  "on-primary-fixed-variant": "#3730a3",
+                  "surface-tint": "#4f46e5",
+                  "surface": "#ffffff",
+                  "surface-container-low": "#f8fafc",
+                  "on-primary": "#ffffff",
+                  "on-surface-variant": "#475569",
+                  "on-background": "#0f172a",
+                  "inverse-on-surface": "#f8fafc",
+                  "surface-container-high": "#f1f5f9",
+                  "primary-fixed": "#e0e7ff",
+                  "tertiary-container": "#d1fae5"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "stack-sm": "8px",
+                  "gutter": "24px",
+                  "stack-md": "16px",
+                  "stack-lg": "32px",
+                  "margin-page": "40px",
+                  "container-max": "1200px",
+                  "base": "4px"
+          },
+          "fontFamily": {
+                  "display-lg": ["Inter"],
+                  "label-caps": ["Geist Mono"],
+                  "body-sm": ["Inter"],
+                  "headline-md": ["Inter"],
+                  "headline-lg-mobile": ["Inter"],
+                  "body-md": ["Inter"],
+                  "headline-lg": ["Inter"],
+                  "data-mono": ["Geist Mono"]
+          },
+          "fontSize": {
+                  "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                  "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                  "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                  "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                  "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                  "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                  "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                  "data-mono": ["14px", { "lineHeight": "1.0", "letterSpacing": "-0.01em", "fontWeight": "500" }]
+          }
+  },
+      },
+    }
+</script>
+<style>
+    body {
+        background-color: #f8faff !important;
+        background-image: 
+            radial-gradient(at 0% 0%, #ffffff 0px, transparent 50%),
+            radial-gradient(at 100% 0%, #eef6ff 0px, transparent 55%),
+            radial-gradient(at 50% 100%, #f3f0ff 0px, transparent 55%),
+            radial-gradient(at 85% 50%, #eef6ff 0px, transparent 50%) !important;
+        background-attachment: fixed !important;
+        color: #0f172a !important;
+    }
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(226, 232, 240, 0.9);
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
+    }
+    .glass-panel-hover:hover {
+        border-color: rgba(79, 70, 229, 0.35);
+        box-shadow: 0 12px 30px -5px rgba(79, 70, 229, 0.12);
+        transform: translateY(-2px);
+    }
+    .primary-gradient-btn {
+        background: linear-gradient(135deg, #4f46e5, #0284c7);
+        color: #ffffff !important;
+        box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.3);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+        height: 6px;
+        width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.03);
+        border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(100, 116, 139, 0.25);
+        border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(100, 116, 139, 0.45);
+    }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex overflow-x-hidden relative">
+
+<!-- Ambient Background Glow Mesh & Dot Overlay -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-indigo-200/35 rounded-full blur-[120px]"></div>
+    <div class="absolute top-1/4 -right-32 w-96 h-96 bg-sky-200/35 rounded-full blur-[120px]"></div>
+    <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-purple-200/30 rounded-full blur-[120px]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:24px_24px] opacity-25"></div>
+</div>
+
+<!-- SideNavBar -->
+<aside class="w-64 bg-white/80 backdrop-blur-xl border-r border-slate-200/80 flex flex-col justify-between p-stack-md shrink-0 h-screen sticky top-0 z-40 hidden md:flex">
+<div class="flex flex-col gap-stack-lg">
+<!-- Brand Header -->
+<div class="flex items-center gap-stack-sm px-2">
+<span class="material-symbols-outlined text-primary text-2xl">neurology</span>
+<div class="flex flex-col">
+<a href="/" class="font-headline-md text-headline-md text-on-surface font-bold tracking-tighter">Sinora AI</a>
+<span class="font-label-caps text-xs text-on-surface-variant">ENTERPRISE TIER</span>
+</div>
+</div>
+<!-- Primary Action Button -->
+<a href="/" class="primary-gradient-btn w-full py-stack-sm rounded-lg font-label-caps text-label-caps text-white flex items-center justify-center gap-2 shadow-lg hover:brightness-110 active:scale-98 transition-all">
+<span class="material-symbols-outlined text-sm">home</span>
+Go to Home
+</a>
+<!-- Nav Links -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-slate-100 font-body-sm transition-colors" href="/">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+Dashboard
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-slate-100 font-body-sm transition-colors" href="/dashboard">
+<span class="material-symbols-outlined text-xl">groups</span>
+Resume Cohorts
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-indigo-50/80 text-primary font-body-sm font-semibold border border-indigo-100" href="/report">
+<span class="material-symbols-outlined text-xl">analytics</span>
+Analysis Reports
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-slate-100 font-body-sm transition-colors" href="/admin">
+<span class="material-symbols-outlined text-xl">admin_panel_settings</span>
+System Oversight
+</a>
+</nav>
+</div>
+<!-- Bottom Links -->
+<div class="flex flex-col gap-1 border-t border-slate-200/80 pt-stack-md">
+<button type="button" onclick="openSettingsModal()" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-slate-100 font-body-sm transition-colors w-full text-left">
+<span class="material-symbols-outlined text-xl">settings</span>
+Settings
+</button>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-body-sm transition-colors" href="/#help">
+<span class="material-symbols-outlined text-xl">help</span>
+Support &amp; Docs
+</a>
+</div>
+</aside>
+
+<!-- Main Workspace -->
+<div class="flex-1 flex flex-col min-w-0">
+<!-- TopAppBar (Mobile & Desktop Header) -->
+<header class="h-16 bg-white/80 backdrop-blur-xl border-b border-slate-200/80 px-margin-page flex items-center justify-between sticky top-0 z-30 shadow-sm">
+<div class="flex items-center gap-2 font-label-caps text-xs text-on-surface-variant">
+<a href="/dashboard" class="hover:text-on-surface">Analysis Reports</a>
+<span>&gt;</span>
+<span id="breadcrumb-candidate" class="text-primary font-bold">Analysis Report</span>
+</div>
+<div class="flex items-center gap-stack-sm">
+<button id="download-pdf-btn" onclick="downloadPdfReport()" class="primary-gradient-btn px-4 py-2 rounded font-label-caps text-xs text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">download</span>
+Download PDF
+</button>
+<button onclick="shareReport()" class="glass-panel px-3 py-2 rounded font-label-caps text-xs text-on-surface flex items-center gap-2 glass-panel-hover">
+<span class="material-symbols-outlined text-sm">share</span>
+Share Team
+</button>
+<button onclick="openSettingsModal()" class="glass-panel p-2 rounded text-on-surface-variant hover:text-on-surface flex items-center justify-center glass-panel-hover">
+<span class="material-symbols-outlined text-sm">settings</span>
+</button>
+</div>
+</header>
+
+<!-- Main Report Workspace -->
+<main id="main-report-workspace" class="p-4 sm:p-6 lg:p-margin-page flex-1 overflow-y-auto flex flex-col gap-gutter min-w-0">
+
+<!-- Criteria Selector Banner -->
+<div class="glass-panel px-4 py-3 rounded-xl border border-white/10 flex flex-wrap items-center justify-between gap-3 bg-surface-container-low/40">
+    <div class="flex items-center gap-2 flex-1 min-w-[260px]">
+        <span class="material-symbols-outlined text-primary text-sm shrink-0">tune</span>
+        <span class="font-label-caps text-xs text-on-surface-variant shrink-0">Active Criteria:</span>
+        <select id="report-criteria-select" class="flex-1 bg-surface-container-low border border-white/10 rounded px-3 py-1.5 font-body-sm text-xs text-on-surface focus:border-primary outline-none">
+            <option value="">Default ATS Standard Criteria</option>
+        </select>
+    </div>
+    <div class="flex items-center gap-2">
+        <button id="reanalyze-btn" onclick="reanalyzeWithCriteria()" class="px-4 py-1.5 glass-panel rounded font-label-caps text-xs text-primary hover:bg-white/10 flex items-center gap-1.5 transition-all">
+            <span class="material-symbols-outlined text-sm">sync</span>
+            <span>Re-evaluate Resume</span>
+        </button>
+    </div>
+</div>
+
+<!-- Hero Bento Header -->
+<div class="glass-panel p-stack-lg rounded-xl flex flex-col md:flex-row items-center justify-between gap-gutter border border-white/10 relative overflow-hidden">
+<div class="flex items-center gap-stack-md z-10 min-w-0 flex-1">
+<div id="candidate-avatar" class="w-16 h-16 rounded-full bg-primary-container/20 border-2 border-primary flex items-center justify-center text-primary font-display-lg font-bold shrink-0">
+    --
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<h1 id="rep-name" class="font-headline-lg text-headline-lg text-on-surface truncate" title="Loading Candidate...">Loading Candidate...</h1>
+<p id="rep-role" class="font-body-sm text-secondary truncate">Applicant Profile</p>
+<div class="flex flex-wrap gap-x-4 gap-y-1 mt-2 font-data-mono text-xs text-on-surface-variant min-w-0">
+<span id="rep-email" class="flex items-center gap-1 truncate max-w-full" title="--"><span class="material-symbols-outlined text-xs shrink-0">mail</span> --</span>
+<span id="rep-phone" class="flex items-center gap-1 truncate shrink-0" title="--"><span class="material-symbols-outlined text-xs shrink-0">call</span> --</span>
+</div>
+</div>
+</div>
+
+<!-- Score Gauge Box -->
+<div class="flex items-center gap-stack-lg z-10 bg-white/90 p-4 rounded-xl border border-slate-200 shadow-sm">
+<div class="relative flex items-center justify-center">
+<svg class="w-24 h-24 transform -rotate-90">
+<circle cx="48" cy="48" fill="transparent" r="40" stroke="rgba(0,0,0,0.06)" stroke-width="8"></circle>
+<circle id="gauge-circle" class="transition-all duration-1000 ease-out" cx="48" cy="48" fill="transparent" r="40" stroke="#4edea3" stroke-dasharray="251" stroke-dashoffset="251" stroke-width="8"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span id="rep-score" class="font-headline-lg text-headline-lg text-tertiary">0</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">/ 100</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-xs text-on-surface-variant">COMPATIBILITY RATING</span>
+<span id="rep-quality" class="font-headline-md text-headline-md text-tertiary font-bold">Processing</span>
+<span id="rep-selection" class="font-data-mono text-xs text-secondary">--% Selection Probability</span>
+</div>
+</div>
+</div>
+
+<!-- Visualization & Analysis Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start">
+
+<!-- Left Column: Keyword Coverage & Missing Skills -->
+<div class="flex flex-col gap-gutter">
+<div class="glass-panel p-stack-md rounded-xl flex flex-col gap-stack-md">
+<h3 class="font-headline-md text-headline-md text-on-surface border-b border-white/10 pb-2">Target Keyword Coverage</h3>
+<div id="keyword-coverage-bars" class="space-y-stack-sm">
+<!-- Dynamic Keyword bars inserted here -->
+</div>
+</div>
+
+<div class="glass-panel p-stack-md rounded-xl flex flex-col gap-stack-md">
+<h3 class="font-headline-md text-headline-md text-on-surface border-b border-white/10 pb-2 flex items-center justify-between">
+<span>Missing Core Skills</span>
+<span class="material-symbols-outlined text-error text-lg">warning</span>
+</h3>
+<div id="missing-skills-container" class="flex flex-wrap gap-2">
+<!-- Missing skills pills -->
+</div>
+</div>
+
+<div class="glass-panel p-stack-md rounded-xl flex flex-col gap-stack-md">
+<h3 class="font-headline-md text-headline-md text-on-surface border-b border-white/10 pb-2">Verified Skill Stack</h3>
+<div id="verified-skills-container" class="flex flex-wrap gap-1.5 font-data-mono text-xs text-on-surface">
+<!-- Verified skills -->
+</div>
+</div>
+</div>
+
+<!-- Right Column: AI Deep Analysis Bento -->
+<div class="lg:col-span-2 flex flex-col gap-gutter">
+<!-- Executive Summary -->
+<div class="glass-panel p-stack-md rounded-xl flex flex-col gap-stack-sm">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+Executive AI Summary
+</h3>
+<p id="rep-summary" class="font-body-md text-on-surface-variant leading-relaxed">
+Analyzing resume details and candidate context...
+</p>
+</div>
+
+<!-- Strengths & Weaknesses Bento -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="glass-panel p-stack-md rounded-xl flex flex-col gap-stack-sm border-l-4 border-l-tertiary">
+<h4 class="font-headline-md text-headline-md text-tertiary flex items-center gap-2">
+<span class="material-symbols-outlined">check_circle</span>
+Key Strengths
+</h4>
+<ul id="rep-strengths" class="space-y-2 font-body-sm text-on-surface">
+<li>• Processing candidate strengths...</li>
+</ul>
+</div>
+<div class="glass-panel p-stack-md rounded-xl flex flex-col gap-stack-sm border-l-4 border-l-error">
+<h4 class="font-headline-md text-headline-md text-error flex items-center gap-2">
+<span class="material-symbols-outlined">error</span>
+Potential Gaps
+</h4>
+<ul id="rep-weaknesses" class="space-y-2 font-body-sm text-on-surface">
+<li>• Processing candidate skill gaps...</li>
+</ul>
+</div>
+</div>
+
+<!-- AI Optimization Suggestions -->
+<div class="glass-panel p-stack-md rounded-xl flex flex-col gap-stack-md">
+<h3 class="font-headline-md text-headline-md text-on-surface">AI Actionable Recommendations</h3>
+<div id="rep-suggestions" class="space-y-stack-md">
+<!-- Dynamic suggestions -->
+</div>
+</div>
+
+<!-- Interview Readiness & Role Fit -->
+<div class="glass-panel p-stack-md rounded-xl flex flex-col gap-stack-sm bg-surface-container/40">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center justify-between">
+<span>Interview Readiness Rating</span>
+<span id="interview-score" class="font-data-mono text-secondary font-bold text-lg">-- / 100</span>
+</h3>
+<p id="interview-notes" class="font-body-sm text-on-surface-variant">
+Awaiting evaluation...
+</p>
+</div>
+
+</div>
+</div>
+</main>
+</div>
+
+<script>
+let currentReportId = null;
+let currentResumeId = null;
+
+async function loadCriteriaOptions() {
+    try {
+        const res = await fetch('/api/criteria');
+        const data = await res.json();
+        const select = document.getElementById('report-criteria-select');
+        if (!select) return;
+        const currentVal = select.value;
+        select.innerHTML = '<option value="">Default ATS Standard Criteria</option>';
+        if (data.success && data.criteria) {
+            data.criteria.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id;
+                opt.textContent = `${c.title} (${c.job_role})`;
+                select.appendChild(opt);
+            });
+        }
+        if (currentVal) select.value = currentVal;
+    } catch (e) {
+        console.error('Failed to load criteria options:', e);
+    }
+}
+
+async function reanalyzeWithCriteria() {
+    if (!currentResumeId) {
+        alert("No resume loaded for re-evaluation.");
+        return;
+    }
+    const select = document.getElementById('report-criteria-select');
+    const criteriaId = select ? select.value : '';
+    const btn = document.getElementById('reanalyze-btn');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="material-symbols-outlined text-sm animate-spin">sync</span> Re-evaluating...';
+    }
+
+    try {
+        const res = await fetch(`/api/analysis/reanalyze/${currentResumeId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ criteria_id: criteriaId })
+        });
+        const data = await res.json();
+        if (data.success && data.report) {
+            populateReport(data.resume || { id: currentResumeId }, data.report);
+        } else {
+            alert('Re-evaluation failed.');
+        }
+    } catch (err) {
+        alert('Failed to connect to backend for re-evaluation.');
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<span class="material-symbols-outlined text-sm">sync</span> <span>Re-evaluate Resume</span>';
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadCriteriaOptions();
+    const path = window.location.pathname;
+    const parts = path.split('/');
+    if (parts.length > 2 && !isNaN(parts[2]) && parts[2] !== "") {
+        currentReportId = parts[2];
+        fetchReportData(currentReportId);
+    } else {
+        fetchLatestReport();
+    }
+});
+
+async function fetchLatestReport() {
+    try {
+        const res = await fetch('/api/history');
+        const data = await res.json();
+        if (data.success && data.history.length > 0) {
+            const firstItem = data.history[0];
+            const targetId = firstItem.report ? firstItem.report.id : (firstItem.resume ? firstItem.resume.id : null);
+            if (targetId) {
+                currentReportId = targetId;
+                fetchReportData(currentReportId);
+                return;
+            }
+        }
+        renderEmptyState();
+    } catch (err) {
+        renderEmptyState();
+    }
+}
+
+async function fetchReportData(id) {
+    try {
+        const res = await fetch(`/api/analysis/${id}`);
+        const data = await res.json();
+        if (data.success && data.report) {
+            populateReport(data.resume, data.report);
+        } else {
+            renderEmptyState();
+        }
+    } catch (err) {
+        renderEmptyState();
+    }
+}
+
+function renderEmptyState() {
+    const container = document.getElementById('main-report-workspace');
+    if (!container) return;
+    const breadcrumb = document.getElementById('breadcrumb-candidate');
+    if (breadcrumb) breadcrumb.innerText = 'No Analysis Selected';
+    container.innerHTML = `
+        <div class="glass-panel p-stack-lg rounded-xl flex flex-col items-center justify-center text-center gap-4 py-16 my-auto">
+            <div class="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined text-3xl">analytics</span>
+            </div>
+            <h2 class="font-headline-lg text-headline-lg text-on-surface">No Resume Analysis Selected</h2>
+            <p class="font-body-md text-on-surface-variant max-w-md">Upload a resume or select an existing analysis from your dashboard to view detailed ATS scoring and AI insights.</p>
+            <div class="flex gap-3 mt-2">
+                <a href="/dashboard" class="glass-panel px-5 py-2.5 rounded font-label-caps text-on-surface hover:bg-white/10">Go to Dashboard</a>
+                <button onclick="openUploadModal()" class="primary-gradient-btn px-6 py-2.5 rounded font-label-caps text-white">Upload Resume</button>
+            </div>
+        </div>
+    `;
+}
+
+function populateReport(resume, report) {
+    if (resume && resume.id) {
+        currentResumeId = resume.id;
+    } else if (report && report.resume_id) {
+        currentResumeId = report.resume_id;
+    }
+
+    if (resume.candidate_name) {
+        document.getElementById('breadcrumb-candidate').innerText = resume.candidate_name;
+        document.getElementById('rep-name').innerText = resume.candidate_name;
+    }
+    document.getElementById('rep-email').innerText = resume.candidate_email || 'No email';
+    document.getElementById('rep-phone').innerText = resume.candidate_phone || '+1 (555) 019-2831';
+    
+    const initials = resume.candidate_name ? resume.candidate_name.split(' ').map(n=>n[0]).join('') : 'SC';
+    document.getElementById('candidate-avatar').innerText = initials;
+
+    const score = report.ats_score || 85;
+    document.getElementById('rep-score').innerText = Math.round(score);
+    document.getElementById('rep-quality').innerText = report.overall_quality || 'Strong Match';
+    document.getElementById('rep-selection').innerText = `${report.selection_percentage}% Selection Probability`;
+
+    // Circular gauge offset (251 max dashoffset)
+    const offset = 251 - (251 * (score / 100));
+    document.getElementById('gauge-circle').setAttribute('stroke-dashoffset', offset);
+
+    // Summary
+    document.getElementById('rep-summary').innerText = report.professional_summary || 'Candidate demonstrates strong technical alignment.';
+
+    // Strengths
+    const strengths = report.strengths || ["Proven technical execution", "Verified cloud background"];
+    document.getElementById('rep-strengths').innerHTML = strengths.map(s => `<li>• ${s}</li>`).join('');
+
+    // Weaknesses
+    const weaknesses = report.weaknesses || ["Could add more frontend metrics"];
+    document.getElementById('rep-weaknesses').innerHTML = weaknesses.map(w => `<li>• ${w}</li>`).join('');
+
+    // Suggestions
+    const suggestions = report.improvement_suggestions || [
+        { title: "Quantify Impact", description: "Add percentage metrics for operational efficiency improvements." }
+    ];
+    document.getElementById('rep-suggestions').innerHTML = suggestions.map((s, idx) => `
+        <div class="flex gap-stack-sm items-start">
+            <span class="w-6 h-6 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center font-data-mono text-xs text-primary shrink-0">${idx + 1}</span>
+            <div class="flex flex-col">
+                <span class="font-medium text-on-surface">${s.title}</span>
+                <span class="text-xs text-on-surface-variant mt-0.5">${s.description}</span>
+            </div>
+        </div>
+    `).join('');
+
+    // Missing Skills
+    const missing = report.missing_skills || ["GraphQL", "Rust"];
+    document.getElementById('missing-skills-container').innerHTML = missing.map(m => `
+        <span class="px-2.5 py-1 rounded bg-error/10 border border-error/30 text-xs font-data-mono text-error">
+            ${m}
+        </span>
+    `).join('');
+
+    // Verified Skills
+    const skills = resume.skills || ["Python", "Docker", "AWS", "SQL", "React"];
+    document.getElementById('verified-skills-container').innerHTML = skills.map(sk => `
+        <span class="px-2 py-0.5 rounded bg-surface-container-high border border-white/5 text-on-surface">
+            ${sk}
+        </span>
+    `).join('');
+
+    // Keyword Coverage Bars
+    const coverage = report.keyword_coverage || {
+        "Cloud Architecture": 98,
+        "System Design": 95,
+        "Python / Go": 88,
+        "Kubernetes / Docker": 85,
+        "Frontend (React)": 40
+    };
+    document.getElementById('keyword-coverage-bars').innerHTML = Object.entries(coverage).map(([k, val]) => `
+        <div class="flex flex-col gap-1">
+            <div class="flex justify-between text-xs">
+                <span class="text-on-surface-variant">${k}</span>
+                <span class="font-data-mono text-secondary">${val}%</span>
+            </div>
+            <div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+                <div class="bg-secondary h-full" style="width: ${val}%"></div>
+            </div>
+        </div>
+    `).join('');
+
+    // Interview readiness
+    const ir = report.interview_readiness || {};
+    const candName = resume.candidate_name || "The candidate";
+    const atsVal = report.ats_score || 70;
+    const irScore = (typeof ir.score === 'number' && ir.score > 0) ? ir.score : Math.min(98, Math.max(35, Math.round(atsVal)));
+    
+    document.getElementById('interview-score').innerText = `${irScore} / 100`;
+    
+    let defaultNotes = `${candName} demonstrates solid preparation based on identified skill matches and experience indicators.`;
+    if (irScore >= 85) {
+        defaultNotes = `${candName} demonstrates exceptional technical preparation and experience alignment, making them highly ready for candidate interviews.`;
+    } else if (irScore >= 70) {
+        defaultNotes = `${candName} displays strong interview readiness for technical screening rounds with good domain alignment.`;
+    } else if (irScore >= 55) {
+        defaultNotes = `${candName} possesses moderate interview readiness. Focused review on core role requirements is recommended before interviews.`;
+    } else {
+        defaultNotes = `${candName} requires additional interview preparation to address key skill and keyword gaps.`;
+    }
+    
+    document.getElementById('interview-notes').innerText = ir.notes || defaultNotes;
+}
+
+function downloadPdfReport() {
+    if (currentReportId) {
+        window.location.href = `/api/reports/download/${currentReportId}`;
+    } else {
+        alert("Please select or upload a resume to download its PDF report.");
+    }
+}
+
+function shareReport() {
+    if (!currentReportId) {
+        alert("No active report selected to share.");
+        return;
+    }
+    navigator.clipboard.writeText(window.location.href);
+    alert('Report link copied to clipboard!');
+}
+</script>
+{% include "settings_modal.html" %}
+</body>
+</html>

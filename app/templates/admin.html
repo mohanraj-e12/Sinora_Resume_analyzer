@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>System Oversight - Sinora AI Admin Panel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          "colors": {
+                  "primary": "#4f46e5",
+                  "background": "#f8faff",
+                  "on-tertiary": "#ffffff",
+                  "tertiary-fixed": "#d1fae5",
+                  "inverse-surface": "#1e293b",
+                  "on-tertiary-container": "#065f46",
+                  "surface-container": "#ffffff",
+                  "on-primary-container": "#312e81",
+                  "error": "#ef4444",
+                  "surface-container-lowest": "#ffffff",
+                  "surface-container-highest": "#e2e8f0",
+                  "outline-variant": "#e2e8f0",
+                  "surface-dim": "#f1f5f9",
+                  "error-container": "#fee2e2",
+                  "secondary": "#0284c7",
+                  "on-error-container": "#991b1b",
+                  "primary-container": "#e0e7ff",
+                  "secondary-container": "#e0f2fe",
+                  "on-secondary": "#ffffff",
+                  "on-error": "#ffffff",
+                  "outline": "#cbd5e1",
+                  "on-secondary-fixed-variant": "#0369a1",
+                  "on-tertiary-fixed": "#064e3b",
+                  "secondary-fixed": "#bae6fd",
+                  "primary-fixed-dim": "#c7d2fe",
+                  "on-tertiary-fixed-variant": "#047857",
+                  "inverse-primary": "#818cf8",
+                  "surface-variant": "#f1f5f9",
+                  "tertiary": "#059669",
+                  "surface-bright": "#ffffff",
+                  "secondary-fixed-dim": "#7dd3fc",
+                  "on-secondary-container": "#075985",
+                  "on-primary-fixed": "#1e1b4b",
+                  "on-surface": "#0f172a",
+                  "on-secondary-fixed": "#0c4a6e",
+                  "tertiary-fixed-dim": "#6ee7b7",
+                  "on-primary-fixed-variant": "#3730a3",
+                  "surface-tint": "#4f46e5",
+                  "surface": "#ffffff",
+                  "surface-container-low": "#f8fafc",
+                  "on-primary": "#ffffff",
+                  "on-surface-variant": "#475569",
+                  "on-background": "#0f172a",
+                  "inverse-on-surface": "#f8fafc",
+                  "surface-container-high": "#f1f5f9",
+                  "primary-fixed": "#e0e7ff",
+                  "tertiary-container": "#d1fae5"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "stack-sm": "8px",
+                  "gutter": "24px",
+                  "stack-md": "16px",
+                  "stack-lg": "32px",
+                  "margin-page": "40px",
+                  "container-max": "1200px",
+                  "base": "4px"
+          },
+          "fontFamily": {
+                  "display-lg": ["Inter"],
+                  "label-caps": ["Geist Mono"],
+                  "body-sm": ["Inter"],
+                  "headline-md": ["Inter"],
+                  "headline-lg-mobile": ["Inter"],
+                  "body-md": ["Inter"],
+                  "headline-lg": ["Inter"],
+                  "data-mono": ["Geist Mono"]
+          },
+          "fontSize": {
+                  "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                  "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                  "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                  "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                  "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                  "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                  "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                  "data-mono": ["14px", { "lineHeight": "1.0", "letterSpacing": "-0.01em", "fontWeight": "500" }]
+          }
+  },
+      },
+    }
+</script>
+<style>
+    body {
+        background-color: #f8faff !important;
+        background-image: 
+            radial-gradient(at 0% 0%, #ffffff 0px, transparent 50%),
+            radial-gradient(at 100% 0%, #eef6ff 0px, transparent 55%),
+            radial-gradient(at 50% 100%, #f3f0ff 0px, transparent 55%),
+            radial-gradient(at 85% 50%, #eef6ff 0px, transparent 50%) !important;
+        background-attachment: fixed !important;
+        color: #0f172a !important;
+    }
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(226, 232, 240, 0.9);
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
+    }
+    .glass-panel-hover:hover {
+        border-color: rgba(79, 70, 229, 0.35);
+        box-shadow: 0 12px 30px -5px rgba(79, 70, 229, 0.12);
+        transform: translateY(-2px);
+    }
+    .primary-gradient-btn {
+        background: linear-gradient(135deg, #4f46e5, #0284c7);
+        color: #ffffff !important;
+        box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.3);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+        height: 6px;
+        width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.03);
+        border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(100, 116, 139, 0.25);
+        border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(100, 116, 139, 0.45);
+    }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex overflow-x-hidden relative">
+
+<!-- Ambient Background Glow Mesh & Dot Overlay -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-indigo-200/35 rounded-full blur-[120px]"></div>
+    <div class="absolute top-1/4 -right-32 w-96 h-96 bg-sky-200/35 rounded-full blur-[120px]"></div>
+    <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-purple-200/30 rounded-full blur-[120px]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:24px_24px] opacity-25"></div>
+</div>
+
+<!-- SideNavBar -->
+<aside class="w-64 bg-white/80 backdrop-blur-xl border-r border-slate-200/80 flex flex-col justify-between p-stack-md shrink-0 h-screen sticky top-0 z-40 hidden md:flex">
+<div class="flex flex-col gap-stack-lg">
+<!-- Brand Header -->
+<div class="flex items-center gap-stack-sm px-2">
+<span class="material-symbols-outlined text-primary text-2xl">neurology</span>
+<div class="flex flex-col">
+<a href="/" class="font-headline-md text-headline-md text-on-surface font-bold tracking-tighter">Sinora AI</a>
+<span class="font-label-caps text-xs text-on-surface-variant">ENTERPRISE TIER</span>
+</div>
+</div>
+<!-- Primary Action Button -->
+<a href="/" class="primary-gradient-btn w-full py-stack-sm rounded-lg font-label-caps text-label-caps text-white flex items-center justify-center gap-2 shadow-lg hover:brightness-110 active:scale-98 transition-all">
+<span class="material-symbols-outlined text-sm">home</span>
+Go to Home
+</a>
+<!-- Nav Links -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-body-sm transition-colors" href="/">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+Dashboard
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-body-sm transition-colors" href="/dashboard">
+<span class="material-symbols-outlined text-xl">groups</span>
+Resume Cohorts
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-body-sm transition-colors" href="/report">
+<span class="material-symbols-outlined text-xl">analytics</span>
+Analysis Reports
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-indigo-50/80 text-primary font-body-sm font-semibold border border-indigo-100" href="/admin">
+<span class="material-symbols-outlined text-xl">admin_panel_settings</span>
+System Oversight
+</a>
+</nav>
+</div>
+<!-- Bottom Links -->
+<div class="flex flex-col gap-1 border-t border-slate-200/80 pt-stack-md">
+<button type="button" onclick="openSettingsModal()" class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-slate-100 font-body-sm transition-colors w-full text-left">
+<span class="material-symbols-outlined text-xl">settings</span>
+Settings
+</button>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-body-sm transition-colors" href="/#help">
+<span class="material-symbols-outlined text-xl">help</span>
+Support &amp; Docs
+</a>
+</div>
+</aside>
+
+<!-- Main Workspace -->
+<div class="flex-1 flex flex-col min-w-0">
+<!-- TopAppBar -->
+<header class="h-16 bg-white/80 backdrop-blur-xl border-b border-slate-200/80 px-margin-page flex items-center justify-between sticky top-0 z-30 shadow-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface">System Oversight Dashboard</h2>
+<div class="flex items-center gap-stack-sm">
+<button onclick="fetchAdminData()" class="glass-panel px-3 py-1.5 rounded font-label-caps text-xs text-on-surface flex items-center gap-2 glass-panel-hover">
+<span class="material-symbols-outlined text-sm">sync</span>
+Sync Diagnostics
+</button>
+<button onclick="openSettingsModal()" class="glass-panel p-2 rounded text-on-surface-variant hover:text-on-surface flex items-center justify-center glass-panel-hover">
+<span class="material-symbols-outlined text-sm">settings</span>
+</button>
+</div>
+</header>
+
+<main class="p-margin-page flex-1 overflow-y-auto flex flex-col gap-gutter">
+<!-- Stat Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="glass-panel p-stack-md rounded-xl flex flex-col gap-2">
+<span class="font-label-caps text-xs text-on-surface-variant">TOTAL REGISTERED USERS</span>
+<div class="flex justify-between items-baseline">
+<span id="adm-users" class="font-display-lg text-display-lg text-on-surface">--</span>
+<span class="font-data-mono text-xs text-tertiary font-bold">+24.5%</span>
+</div>
+</div>
+<div class="glass-panel p-stack-md rounded-xl flex flex-col gap-2">
+<span class="font-label-caps text-xs text-on-surface-variant">PARSED RESUMES</span>
+<div class="flex justify-between items-baseline">
+<span id="adm-resumes" class="font-display-lg text-display-lg text-secondary">--</span>
+<span class="font-data-mono text-xs text-secondary font-bold">Live</span>
+</div>
+</div>
+<div class="glass-panel p-stack-md rounded-xl flex flex-col gap-2">
+<span class="font-label-caps text-xs text-on-surface-variant">GENERATED REPORTS</span>
+<div class="flex justify-between items-baseline">
+<span id="adm-reports" class="font-display-lg text-display-lg text-primary">--</span>
+<span class="font-data-mono text-xs text-primary font-bold">Complete</span>
+</div>
+</div>
+<div class="glass-panel p-stack-md rounded-xl flex flex-col gap-2">
+<span class="font-label-caps text-xs text-on-surface-variant">AVG ATS SCORE</span>
+<div class="flex justify-between items-baseline">
+<span id="adm-avg-score" class="font-display-lg text-display-lg text-tertiary">--</span>
+<span class="font-data-mono text-xs text-tertiary font-bold">Stable</span>
+</div>
+</div>
+</div>
+
+<!-- Analytics Bento Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start">
+<!-- Left 2 Cols: User Growth & System Gauges -->
+<div class="lg:col-span-2 flex flex-col gap-gutter">
+<!-- User Growth Graph -->
+<div class="glass-panel p-stack-md rounded-xl flex flex-col gap-stack-md">
+<div class="flex justify-between items-center border-b border-white/10 pb-2">
+<h3 class="font-headline-md text-headline-md text-on-surface">User Growth Trend</h3>
+<span class="font-data-mono text-xs text-tertiary">+24.5% this month</span>
+</div>
+<div class="w-full h-48 flex items-end justify-between pt-4 px-2">
+<svg class="w-full h-full overflow-visible" viewBox="0 0 500 150">
+<path d="M0,120 Q75,90 150,110 T300,50 T500,20" fill="none" stroke="#8083ff" stroke-width="3"></path>
+<path d="M0,120 Q75,90 150,110 T300,50 T500,20 L500,150 L0,150 Z" fill="rgba(128,131,255,0.1)"></path>
+<circle cx="500" cy="20" r="5" fill="#4cd7f6"></circle>
+</svg>
+</div>
+</div>
+
+<!-- System Metrics Gauges -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="glass-panel p-stack-md rounded-xl flex flex-col items-center justify-center text-center gap-2">
+<span class="font-label-caps text-xs text-on-surface-variant">CPU SYSTEM LOAD</span>
+<div class="relative w-32 h-32 flex items-center justify-center">
+<svg class="w-28 h-28 transform -rotate-90">
+<circle cx="56" cy="56" r="48" fill="transparent" stroke="rgba(255,255,255,0.05)" stroke-width="8"></circle>
+<circle cx="56" cy="56" r="48" fill="transparent" stroke="#4edea3" stroke-width="8" stroke-dasharray="301" stroke-dashoffset="75"></circle>
+</svg>
+<span id="sys-load" class="absolute font-data-mono text-headline-md text-tertiary font-bold">75%</span>
+</div>
+<span class="font-body-sm text-xs text-on-surface-variant">Optimal Performance</span>
+</div>
+
+<div class="glass-panel p-stack-md rounded-xl flex flex-col items-center justify-center text-center gap-2">
+<span class="font-label-caps text-xs text-on-surface-variant">STORAGE CAPACITY</span>
+<div class="relative w-32 h-32 flex items-center justify-center">
+<svg class="w-28 h-28 transform -rotate-90">
+<circle cx="56" cy="56" r="48" fill="transparent" stroke="rgba(255,255,255,0.05)" stroke-width="8"></circle>
+<circle cx="56" cy="56" r="48" fill="transparent" stroke="#4cd7f6" stroke-width="8" stroke-dasharray="301" stroke-dashoffset="180"></circle>
+</svg>
+<span id="sys-storage" class="absolute font-data-mono text-headline-md text-secondary font-bold">38%</span>
+</div>
+<span class="font-body-sm text-xs text-on-surface-variant">Normal Usage</span>
+</div>
+</div>
+</div>
+
+<!-- Right Col: AI Terminal Logs -->
+<div class="glass-panel p-stack-md rounded-xl flex flex-col gap-stack-md h-[420px]">
+<div class="flex justify-between items-center border-b border-white/10 pb-2">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-xs text-tertiary">terminal</span>
+AI Terminal Logs
+</h3>
+<span class="font-data-mono text-[10px] text-on-surface-variant">STREAMING</span>
+</div>
+<div id="admin-terminal-logs" class="flex-1 overflow-y-auto font-data-mono text-xs space-y-2 bg-black/40 p-3 rounded-lg border border-white/5">
+<div class="text-tertiary">[2026-08-06 10:00:01] [INFO] Parser worker pool initialized.</div>
+<div class="text-secondary">[2026-08-06 10:00:05] [DEBUG] Gemini 3.6 Flash connection established.</div>
+<div class="text-on-surface-variant">[2026-08-06 10:00:12] [INFO] PDF OCR worker idle.</div>
+</div>
+</div>
+</div>
+
+<!-- Registered Users Management Table -->
+<div class="glass-panel rounded-xl overflow-hidden border border-white/10">
+<div class="p-stack-md border-b border-white/10 flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Registered Users &amp; Roles</h3>
+</div>
+<div class="overflow-x-auto custom-scrollbar w-full">
+<table class="w-full text-left border-collapse font-body-sm table-auto sm:table-fixed min-w-[500px]">
+<thead>
+<tr class="border-b border-white/10 bg-surface-container-lowest font-label-caps text-xs text-on-surface-variant">
+<th class="py-3 px-4 w-[45%] min-w-[160px]">USER</th>
+<th class="py-3 px-4 w-[20%] min-w-[90px]">ROLE</th>
+<th class="py-3 px-4 w-[20%] min-w-[110px]">JOINED</th>
+<th class="py-3 px-4 w-[15%] min-w-[80px] text-right">ACTIONS</th>
+</tr>
+</thead>
+<tbody id="users-table-body" class="divide-y divide-white/5">
+<tr>
+<td colspan="4" class="p-6 text-center text-on-surface-variant">Loading user records...</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    fetchAdminData();
+});
+
+async function fetchAdminData() {
+    try {
+        const res = await fetch('/api/admin/dashboard');
+        const data = await res.json();
+        if (data.success) {
+            document.getElementById('adm-users').innerText = data.stats.total_users;
+            document.getElementById('adm-resumes').innerText = data.stats.total_resumes;
+            document.getElementById('adm-reports').innerText = data.stats.total_reports;
+            document.getElementById('adm-avg-score').innerText = data.stats.avg_ats_score + '%';
+
+            if (data.logs && data.logs.length > 0) {
+                const logsContainer = document.getElementById('admin-terminal-logs');
+                logsContainer.innerHTML = data.logs.map(l => {
+                    let color = 'text-on-surface-variant';
+                    if (l.log_type === 'INFO') color = 'text-tertiary';
+                    if (l.log_type === 'WARN') color = 'text-error';
+                    if (l.log_type === 'DEBUG') color = 'text-secondary';
+                    return `<div class="${color}">[${new Date(l.timestamp).toLocaleTimeString()}] [${l.log_type}] ${l.message}</div>`;
+                }).join('');
+            }
+        }
+        fetchUsers();
+    } catch (err) {
+        console.error('Failed to load admin dashboard:', err);
+    }
+}
+
+async function fetchUsers() {
+    try {
+        const res = await fetch('/api/admin/users');
+        const data = await res.json();
+        if (data.success) {
+            const tbody = document.getElementById('users-table-body');
+            tbody.innerHTML = data.users.map(u => `
+                <tr class="hover:bg-surface-container-high/50 transition-colors">
+                    <td class="py-3 px-4">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <div class="w-8 h-8 rounded-full bg-primary-container/20 border border-primary/30 flex items-center justify-center font-data-mono text-primary text-xs font-bold shrink-0">
+                                ${u.name ? u.name.charAt(0) : 'U'}
+                            </div>
+                            <div class="flex flex-col min-w-0 flex-1">
+                                <span class="font-medium text-on-surface truncate block" title="${u.name}">${u.name}</span>
+                                <span class="text-xs text-on-surface-variant truncate block" title="${u.email}">${u.email}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-3 px-4 whitespace-nowrap">
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-label-caps ${u.role === 'admin' ? 'bg-primary/20 text-primary border border-primary/40' : 'bg-surface-container text-on-surface-variant'}">
+                            ${u.role.toUpperCase()}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 font-data-mono text-xs text-on-surface-variant whitespace-nowrap">
+                        ${new Date(u.created_at).toLocaleDateString()}
+                    </td>
+                    <td class="py-3 px-4 text-right whitespace-nowrap">
+                        <button onclick="deleteUser(${u.id})" class="p-1 text-on-surface-variant hover:text-error rounded hover:bg-white/5" title="Delete User"><span class="material-symbols-outlined text-sm">delete</span></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+    } catch (err) {
+        console.error('Failed to load users:', err);
+    }
+}
+
+async function deleteUser(id) {
+    showDeleteConfirmModal({
+        title: 'Delete User Account',
+        message: 'Are you sure you want to delete this user? This will remove all associated user data.',
+        onConfirm: async () => {
+            try {
+                const res = await fetch(`/api/admin/users/${id}`, { method: 'DELETE' });
+                const data = await res.json();
+                if (data.success) {
+                    showSettingsToast('User deleted successfully.');
+                    fetchAdminData();
+                } else {
+                    showSettingsToast(data.message || 'Failed to delete user.', true);
+                }
+            } catch (err) {
+                showSettingsToast('Failed to delete user.', true);
+            }
+        }
+    });
+}
+</script>
+{% include "settings_modal.html" %}
+</body>
+</html>

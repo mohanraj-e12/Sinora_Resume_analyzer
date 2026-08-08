@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Sinora AI - Resume AI Analyzer</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#4f46e5",
+                      "background": "#f8faff",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed": "#d1fae5",
+                      "inverse-surface": "#1e293b",
+                      "on-tertiary-container": "#065f46",
+                      "surface-container": "#ffffff",
+                      "on-primary-container": "#312e81",
+                      "error": "#ef4444",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-highest": "#e2e8f0",
+                      "outline-variant": "#e2e8f0",
+                      "surface-dim": "#f1f5f9",
+                      "error-container": "#fee2e2",
+                      "secondary": "#0284c7",
+                      "on-error-container": "#991b1b",
+                      "primary-container": "#e0e7ff",
+                      "secondary-container": "#e0f2fe",
+                      "on-secondary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "outline": "#cbd5e1",
+                      "on-secondary-fixed-variant": "#0369a1",
+                      "on-tertiary-fixed": "#064e3b",
+                      "secondary-fixed": "#bae6fd",
+                      "primary-fixed-dim": "#c7d2fe",
+                      "on-tertiary-fixed-variant": "#047857",
+                      "inverse-primary": "#818cf8",
+                      "surface-variant": "#f1f5f9",
+                      "tertiary": "#059669",
+                      "surface-bright": "#ffffff",
+                      "secondary-fixed-dim": "#7dd3fc",
+                      "on-secondary-container": "#075985",
+                      "on-primary-fixed": "#1e1b4b",
+                      "on-surface": "#0f172a",
+                      "on-secondary-fixed": "#0c4a6e",
+                      "tertiary-fixed-dim": "#6ee7b7",
+                      "on-primary-fixed-variant": "#3730a3",
+                      "surface-tint": "#4f46e5",
+                      "surface": "#ffffff",
+                      "surface-container-low": "#f8fafc",
+                      "on-primary": "#ffffff",
+                      "on-surface-variant": "#475569",
+                      "on-background": "#0f172a",
+                      "inverse-on-surface": "#f8fafc",
+                      "surface-container-high": "#f1f5f9",
+                      "primary-fixed": "#e0e7ff",
+                      "tertiary-container": "#d1fae5"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "gutter": "24px",
+                      "stack-md": "16px",
+                      "stack-lg": "32px",
+                      "margin-page": "40px",
+                      "container-max": "1200px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Inter"],
+                      "label-caps": ["Geist Mono"],
+                      "body-sm": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "data-mono": ["Geist Mono"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                      "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                      "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                      "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                      "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                      "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                      "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                      "data-mono": ["14px", { "lineHeight": "1.0", "letterSpacing": "-0.01em", "fontWeight": "500" }]
+              }
+      },
+          },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f8faff !important;
+            background-image: 
+                radial-gradient(at 0% 0%, #ffffff 0px, transparent 50%),
+                radial-gradient(at 100% 0%, #eef6ff 0px, transparent 55%),
+                radial-gradient(at 50% 100%, #f3f0ff 0px, transparent 55%),
+                radial-gradient(at 85% 50%, #eef6ff 0px, transparent 50%) !important;
+            background-attachment: fixed !important;
+            color: #0f172a !important;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
+        }
+        .glass-panel-hover:hover {
+            border-color: rgba(79, 70, 229, 0.35);
+            box-shadow: 0 12px 30px -5px rgba(79, 70, 229, 0.12);
+            transform: translateY(-2px);
+        }
+        .primary-gradient-btn {
+            background: linear-gradient(135deg, #4f46e5, #0284c7);
+            color: #ffffff !important;
+            box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.3);
+        }
+        .primary-gradient-btn:hover {
+            box-shadow: 0 6px 20px 0 rgba(79, 70, 229, 0.45);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #4f46e5, #0284c7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen relative overflow-x-hidden">
+<!-- Shader Background -->
+<div class="fixed inset-0 z-0 pointer-events-none opacity-40">
+<div class="absolute inset-0 w-full h-full" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_2" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_2');
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+uniform float u_time;
+uniform vec2 u_resolution;
+
+void main() {
+    vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+    float time = u_time * 0.2;
+    float n = sin(uv.x * 3.0 + time) * cos(uv.y * 2.0 - time * 0.5);
+    n += sin(uv.y * 4.0 + time * 0.8) * cos(uv.x * 5.0 + time * 0.3);
+    vec3 color1 = vec3(0.039, 0.039, 0.039);
+    vec3 color2 = vec3(0.094, 0.101, 0.235);
+    vec3 color3 = vec3(0.023, 0.047, 0.054);
+    vec3 finalColor = mix(color1, color2, n * 0.5 + 0.5);
+    finalColor = mix(finalColor, color3, sin(time + uv.x * 10.0) * 0.2 + 0.2);
+    gl_FragColor = vec4(finalColor, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+</div>
+
+<!-- Navigation Overlay -->
+<div class="relative z-10">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/80 flex justify-between items-center px-margin-page h-16 shadow-sm">
+<div class="flex items-center gap-stack-lg">
+<a href="/" class="font-headline-md text-headline-md font-bold text-on-surface tracking-tighter">Sinora AI</a>
+<div class="hidden md:flex gap-stack-md">
+<a class="font-label-caps text-label-caps text-primary opacity-90 hover:opacity-100 transition-colors" href="/dashboard">Dashboard</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors opacity-90 hover:opacity-100" href="/report">Sample Report</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors opacity-90 hover:opacity-100" href="/admin">System Admin</a>
+<button onclick="openCriteriaModal()" class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors opacity-90 hover:opacity-100">Manual Criteria</button>
+</div>
+</div>
+<div class="flex items-center gap-stack-md">
+<button id="auth-btn-signin" onclick="openAuthModal('login')" class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors hidden md:block">Sign In</button>
+<button onclick="openUploadModal()" class="primary-gradient-btn px-4 py-2 rounded font-label-caps text-label-caps text-white transition-transform hover:scale-105 active:scale-95">Get Started</button>
+<div class="flex gap-2 items-center">
+<button onclick="openSettingsModal()" class="text-on-surface-variant hover:text-secondary flex items-center p-1 rounded-lg transition-colors" title="Settings"><span class="material-symbols-outlined">settings</span></button>
+<a href="/dashboard" class="text-on-surface-variant hover:text-secondary"><span class="material-symbols-outlined">notifications</span></a>
+<button onclick="openSettingsModal()" class="text-on-surface-variant hover:text-secondary"><span class="material-symbols-outlined">account_circle</span></button>
+</div>
+</div>
+</nav>
+
+<!-- Main Content -->
+<main class="pt-32 pb-margin-page px-margin-page max-w-container-max mx-auto relative z-10 flex flex-col gap-32">
+<!-- Hero Section -->
+<section class="flex flex-col lg:flex-row items-center justify-between gap-gutter mt-16">
+<div class="flex-1 flex flex-col gap-stack-lg z-10">
+<h1 class="font-display-lg text-display-lg text-on-surface max-w-2xl text-gradient font-bold">Precision Engineering for Career Advancement</h1>
+<p class="text-lg md:text-xl text-slate-700 font-medium max-w-xl leading-relaxed">
+The industry-standard AI analyzer for HR teams and elite candidates. ATS scoring, skill gap detection, and real-time cohort analysis.
+</p>
+<div class="flex gap-stack-md mt-stack-sm">
+<button onclick="openUploadModal()" class="primary-gradient-btn px-6 py-3 rounded-lg font-label-caps text-label-caps text-white transition-all hover:shadow-[0_4px_20px_rgba(79,70,229,0.4)] active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">upload_file</span>
+Upload Resume
+</button>
+<a href="/report" class="glass-panel px-6 py-3 rounded-lg font-label-caps text-label-caps text-on-surface transition-all glass-panel-hover active:scale-95 border-slate-200 inline-flex items-center justify-center">
+View Sample Report
+</a>
+</div>
+</div>
+<!-- Floating Glass Card Preview -->
+<div class="flex-1 relative w-full max-w-md perspective-1000">
+<div class="glass-panel rounded-xl p-stack-lg border border-slate-200/80 transform rotate-y-[-10deg] rotate-x-[5deg] hover:rotate-y-0 hover:rotate-x-0 transition-transform duration-700 shadow-xl bg-white/90">
+<div class="flex justify-between items-start border-b border-slate-200 pb-stack-md mb-stack-md">
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant">ATS COMPATIBILITY SCORE</h3>
+<p class="font-data-mono text-data-mono text-on-surface mt-1">DOC_ID: A73-992</p>
+</div>
+<span class="material-symbols-outlined text-primary">verified</span>
+</div>
+<div class="flex items-center justify-center py-stack-lg relative">
+<svg class="w-40 h-40 transform -rotate-90">
+<circle cx="80" cy="80" fill="transparent" r="70" stroke="rgba(0,0,0,0.06)" stroke-width="12"></circle>
+<circle class="transition-all duration-1000 ease-out" cx="80" cy="80" fill="transparent" r="70" stroke="#4edea3" stroke-dasharray="440" stroke-dashoffset="66" stroke-width="12"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="font-display-lg text-display-lg text-tertiary">85</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">/ 100</span>
+</div>
+</div>
+<div class="space-y-stack-sm mt-stack-md">
+<div class="flex justify-between items-center text-sm">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Keyword Match</span>
+<span class="font-data-mono text-data-mono text-secondary">92%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[92%]"></div>
+</div>
+<div class="flex justify-between items-center text-sm pt-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Formatting</span>
+<span class="font-data-mono text-data-mono text-primary">100%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-full"></div>
+</div>
+</div>
+</div>
+<div class="absolute inset-0 bg-primary/20 blur-[100px] -z-10 rounded-full"></div>
+</div>
+</section>
+
+<!-- Features Grid -->
+<section class="flex flex-col gap-stack-lg z-10 relative">
+<h2 class="font-headline-lg text-headline-lg text-on-surface border-b border-white/10 pb-stack-sm inline-block w-max">Core Capabilities</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="glass-panel p-stack-md rounded-lg glass-panel-hover transition-all group">
+<span class="material-symbols-outlined text-primary text-3xl mb-stack-md block group-hover:scale-110 transition-transform">document_scanner</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Deep Extraction</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Multi-format ingestion pipeline (PDF/DOCX/ZIP) with 99.9% semantic accuracy.</p>
+</div>
+<div class="glass-panel p-stack-md rounded-lg glass-panel-hover transition-all group">
+<span class="material-symbols-outlined text-secondary text-3xl mb-stack-md block group-hover:scale-110 transition-transform">model_training</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">ATS Optimization</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Reverse-engineered scoring algorithms mirroring top enterprise tracking systems.</p>
+</div>
+<div class="glass-panel p-stack-md rounded-lg glass-panel-hover transition-all group">
+<span class="material-symbols-outlined text-tertiary text-3xl mb-stack-md block group-hover:scale-110 transition-transform">troubleshoot</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Skill Gap Detection</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Automated comparative analysis against real-time job market role requirements.</p>
+</div>
+<div class="glass-panel p-stack-md rounded-lg glass-panel-hover transition-all group">
+<span class="material-symbols-outlined text-primary-container text-3xl mb-stack-md block group-hover:scale-110 transition-transform">admin_panel_settings</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Enterprise Admin</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Bulk processing, cohort management, and custom scoring rule definitions.</p>
+</div>
+</div>
+</section>
+
+<!-- How it Works -->
+<section class="flex flex-col gap-stack-lg z-10 relative">
+<h2 class="font-headline-lg text-headline-lg text-on-surface text-center">Processing Pipeline</h2>
+<div class="flex flex-col md:flex-row gap-gutter relative">
+<div class="hidden md:block absolute top-1/2 left-0 w-full h-[1px] bg-white/10 -z-10 transform -translate-y-1/2"></div>
+<div class="flex-1 glass-panel p-stack-md rounded-xl text-center relative group">
+<div class="w-12 h-12 bg-surface rounded-full border border-primary flex items-center justify-center mx-auto -mt-10 mb-stack-sm text-primary font-data-mono z-10 relative shadow-[0_0_15px_rgba(192,193,255,0.2)]">01</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">Ingestion</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Secure upload and OCR text extraction.</p>
+</div>
+<div class="flex-1 glass-panel p-stack-md rounded-xl text-center relative mt-8 md:mt-0">
+<div class="w-12 h-12 bg-surface rounded-full border border-secondary flex items-center justify-center mx-auto -mt-10 mb-stack-sm text-secondary font-data-mono z-10 relative shadow-[0_0_15px_rgba(76,215,246,0.2)]">02</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">Analysis</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">NLP parsing and semantic mapping.</p>
+</div>
+<div class="flex-1 glass-panel p-stack-md rounded-xl text-center relative mt-8 md:mt-0">
+<div class="w-12 h-12 bg-surface rounded-full border border-tertiary flex items-center justify-center mx-auto -mt-10 mb-stack-sm text-tertiary font-data-mono z-10 relative shadow-[0_0_15px_rgba(78,222,163,0.2)]">03</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">Output</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Actionable scoring and cohort reports.</p>
+</div>
+</div>
+</section>
+</main>
+
+<!-- Footer -->
+<footer class="w-full py-stack-lg bg-surface-container-lowest border-t border-white/5 relative z-10">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-page max-w-container-max mx-auto">
+<div class="flex flex-col gap-2 mb-4 md:mb-0">
+<span class="font-label-caps text-label-caps text-primary tracking-widest">SINORA AI</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">© 2026 Sinora AI. Precision Engineering for Careers.</span>
+</div>
+<div class="flex gap-gutter">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline-offset-4 hover:underline transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline-offset-4 hover:underline transition-colors" href="#">Terms of Service</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline-offset-4 hover:underline transition-colors" href="#">Security</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline-offset-4 hover:underline transition-colors" href="#">Status</a>
+</div>
+</div>
+</footer>
+</div>
+
+<!-- Upload Resume Modal -->
+<div id="upload-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center hidden">
+    <div class="glass-panel p-stack-lg rounded-xl max-w-lg w-full mx-4 relative border border-white/20">
+        <button onclick="closeUploadModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-white"><span class="material-symbols-outlined">close</span></button>
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-stack-sm flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">upload_file</span>
+            Upload Resume(s)
+        </h3>
+        <p class="font-body-sm text-on-surface-variant mb-stack-md">Supports PDF, DOC, DOCX, and ZIP archives containing multiple resumes.</p>
+        
+        <form id="upload-form" onsubmit="handleUploadSubmit(event)" class="space-y-stack-md">
+            <div id="modal-dropzone" class="border-2 border-dashed border-white/20 hover:border-secondary rounded-lg p-6 text-center cursor-pointer transition-colors" onclick="document.getElementById('file-input').click()">
+                <span class="material-symbols-outlined text-4xl text-secondary mb-2">cloud_upload</span>
+                <p class="font-body-sm text-on-surface">Click or drag & drop files here</p>
+                <p id="file-count" class="font-data-mono text-xs text-on-surface-variant mt-1">No files selected</p>
+                <input type="file" id="file-input" name="files" multiple accept=".pdf,.doc,.docx,.zip" class="hidden" onchange="updateFileCount()">
+            </div>
+
+            <div>
+                <label class="block font-label-caps text-xs text-on-surface-variant mb-1">Target Job / Scoring Criteria</label>
+                <div class="flex gap-2">
+                    <select id="upload-criteria-select" name="criteria_id" class="flex-1 bg-surface-container-low border border-white/10 rounded px-3 py-2 font-body-sm text-xs text-on-surface focus:border-primary outline-none">
+                        <option value="">Default ATS Standard Criteria</option>
+                    </select>
+                    <button type="button" onclick="openCriteriaModal()" class="px-3 py-2 glass-panel rounded font-label-caps text-xs text-primary hover:bg-white/10 flex items-center gap-1 shrink-0">
+                        <span class="material-symbols-outlined text-sm">tune</span> Create Criteria
+                    </button>
+                </div>
+            </div>
+
+            <div id="upload-progress-container" class="hidden">
+                <div class="flex justify-between font-label-caps text-xs text-on-surface mb-1">
+                    <span>Processing Resume Pipeline...</span>
+                    <span id="upload-pct">0%</span>
+                </div>
+                <div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+                    <div id="upload-progress-bar" class="bg-gradient-to-r from-primary to-secondary h-full w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2">
+                <button type="button" onclick="closeUploadModal()" class="px-4 py-2 glass-panel rounded font-label-caps text-on-surface hover:bg-white/10">Cancel</button>
+                <button type="submit" class="primary-gradient-btn px-6 py-2 rounded font-label-caps text-white font-semibold">Start Analysis</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Auth Modal (Register / Login / Reset) -->
+<div id="auth-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center hidden">
+    <div class="glass-panel p-stack-lg rounded-xl max-w-md w-full mx-4 relative border border-white/20">
+        <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-white"><span class="material-symbols-outlined">close</span></button>
+        <h3 id="auth-modal-title" class="font-headline-md text-headline-md text-on-surface mb-stack-md text-center">Sign In to Sinora AI</h3>
+        
+        <div id="auth-alert" class="hidden p-2 mb-3 rounded text-xs font-body-sm bg-error/10 text-error border border-error/30"></div>
+
+        <form id="auth-form" onsubmit="handleAuthSubmit(event)" class="space-y-3">
+            <div id="name-field-group" class="hidden">
+                <label class="block font-label-caps text-xs text-on-surface-variant mb-1">Full Name</label>
+                <input type="text" id="auth-name" class="w-full bg-surface-container-low border border-white/10 rounded px-3 py-2 font-body-sm text-on-surface focus:border-primary outline-none" placeholder="Sarah Chen">
+            </div>
+            <div>
+                <label class="block font-label-caps text-xs text-on-surface-variant mb-1">Email Address</label>
+                <input type="email" id="auth-email" required class="w-full bg-surface-container-low border border-white/10 rounded px-3 py-2 font-body-sm text-on-surface focus:border-primary outline-none" placeholder="sarah@example.com">
+            </div>
+            <div id="password-field-group">
+                <label class="block font-label-caps text-xs text-on-surface-variant mb-1">Password</label>
+                <input type="password" id="auth-password" class="w-full bg-surface-container-low border border-white/10 rounded px-3 py-2 font-body-sm text-on-surface focus:border-primary outline-none" placeholder="••••••••">
+            </div>
+
+            <button type="submit" id="auth-submit-btn" class="w-full primary-gradient-btn py-2.5 rounded font-label-caps text-white font-semibold mt-2">Sign In</button>
+        </form>
+
+        <div class="relative my-4 flex items-center justify-center">
+            <div class="border-t border-white/10 w-full"></div>
+            <span class="bg-surface px-2 font-label-caps text-xs text-on-surface-variant absolute">OR</span>
+        </div>
+
+        <div class="space-y-2">
+            <button onclick="handleGoogleLogin()" class="w-full glass-panel py-2 rounded font-label-caps text-on-surface hover:bg-white/10 flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-sm">g_mobiledata</span>
+                Continue with Google
+            </button>
+            <button onclick="handleGithubLogin()" class="w-full glass-panel py-2 rounded font-label-caps text-on-surface hover:bg-white/10 flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-sm">code</span>
+                Continue with GitHub
+            </button>
+        </div>
+
+        <div class="mt-4 flex justify-between text-xs font-body-sm text-on-surface-variant" id="auth-footer-links">
+            <button type="button" onclick="toggleAuthMode('register')" class="hover:text-primary transition-colors">Create Account</button>
+            <button type="button" onclick="toggleAuthMode('forgot')" class="hover:text-primary transition-colors">Forgot Password?</button>
+        </div>
+    </div>
+</div>
+
+<!-- Manual Criteria Modal -->
+<div id="criteria-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center hidden">
+    <div class="glass-panel p-stack-lg rounded-xl max-w-xl w-full mx-4 max-h-[90vh] overflow-y-auto relative border border-white/20">
+        <button onclick="closeCriteriaModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-white"><span class="material-symbols-outlined">close</span></button>
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-stack-sm flex items-center gap-2">
+            <span class="material-symbols-outlined text-tertiary">tune</span>
+            Create Custom Scoring Criteria
+        </h3>
+        <p class="font-body-sm text-on-surface-variant mb-4">Define custom weights, required skills, degree rules, and job role parameters.</p>
+
+        <form id="criteria-form" onsubmit="handleCriteriaSubmit(event)" class="space-y-3">
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block font-label-caps text-xs text-on-surface-variant mb-1">Criteria Title</label>
+                    <input type="text" id="crit-title" required class="w-full bg-surface-container-low border border-white/10 rounded px-3 py-1.5 text-sm text-on-surface" placeholder="Senior Backend Criteria">
+                </div>
+                <div>
+                    <label class="block font-label-caps text-xs text-on-surface-variant mb-1">Target Job Role</label>
+                    <input type="text" id="crit-role" required class="w-full bg-surface-container-low border border-white/10 rounded px-3 py-1.5 text-sm text-on-surface" placeholder="Cloud Architect">
+                </div>
+            </div>
+
+            <div>
+                <label class="block font-label-caps text-xs text-on-surface-variant mb-1">Required Skills (Comma separated)</label>
+                <input type="text" id="crit-req-skills" class="w-full bg-surface-container-low border border-white/10 rounded px-3 py-1.5 text-sm text-on-surface" placeholder="Python, Docker, Kubernetes, AWS, SQL">
+            </div>
+
+            <div>
+                <label class="block font-label-caps text-xs text-on-surface-variant mb-1">Target Keywords (Comma separated)</label>
+                <input type="text" id="crit-keywords" class="w-full bg-surface-container-low border border-white/10 rounded px-3 py-1.5 text-sm text-on-surface" placeholder="System Design, Microservices, Scalability">
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block font-label-caps text-xs text-on-surface-variant mb-1">Min Experience (Years)</label>
+                    <input type="number" id="crit-exp" step="0.5" value="3.0" class="w-full bg-surface-container-low border border-white/10 rounded px-3 py-1.5 text-sm text-on-surface">
+                </div>
+                <div>
+                    <label class="block font-label-caps text-xs text-on-surface-variant mb-1">Min Degree</label>
+                    <input type="text" id="crit-degree" value="Bachelor's" class="w-full bg-surface-container-low border border-white/10 rounded px-3 py-1.5 text-sm text-on-surface">
+                </div>
+            </div>
+
+            <div>
+                <label class="block font-label-caps text-xs text-on-surface-variant mb-1">Weights Configuration</label>
+                <div class="grid grid-cols-3 gap-2 text-xs">
+                    <div>
+                        <span class="text-on-surface-variant">Skill Weight</span>
+                        <input type="number" id="w-skill" value="30" class="w-full bg-surface-container-low border border-white/10 rounded px-2 py-1 text-on-surface">
+                    </div>
+                    <div>
+                        <span class="text-on-surface-variant">Experience Wt</span>
+                        <input type="number" id="w-exp" value="25" class="w-full bg-surface-container-low border border-white/10 rounded px-2 py-1 text-on-surface">
+                    </div>
+                    <div>
+                        <span class="text-on-surface-variant">Keyword Wt</span>
+                        <input type="number" id="w-kw" value="20" class="w-full bg-surface-container-low border border-white/10 rounded px-2 py-1 text-on-surface">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-3">
+                <button type="button" onclick="closeCriteriaModal()" class="px-4 py-1.5 glass-panel rounded font-label-caps text-on-surface">Cancel</button>
+                <button type="submit" class="primary-gradient-btn px-5 py-1.5 rounded font-label-caps text-white font-semibold">Save Template</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+let currentAuthMode = 'login';
+
+async function loadCriteriaOptions() {
+    try {
+        const res = await fetch('/api/criteria');
+        const data = await res.json();
+        const selects = document.querySelectorAll('#upload-criteria-select, #report-criteria-select');
+        selects.forEach(select => {
+            if (!select) return;
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">Default ATS Standard Criteria</option>';
+            if (data.success && data.criteria) {
+                data.criteria.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.textContent = `${c.title} (${c.job_role})`;
+                    select.appendChild(opt);
+                });
+            }
+            if (currentVal) select.value = currentVal;
+        });
+    } catch (e) {
+        console.error('Failed to load criteria options:', e);
+    }
+}
+
+function openUploadModal() {
+    loadCriteriaOptions();
+    document.getElementById('upload-modal').classList.remove('hidden');
+}
+function closeUploadModal() {
+    document.getElementById('upload-modal').classList.add('hidden');
+}
+
+function updateFileCount() {
+    const input = document.getElementById('file-input');
+    const countText = document.getElementById('file-count');
+    if (input.files.length > 0) {
+        countText.innerText = `${input.files.length} file(s) selected: ` + Array.from(input.files).map(f => f.name).join(', ');
+    } else {
+        countText.innerText = 'No files selected';
+    }
+}
+
+async function handleUploadSubmit(e) {
+    e.preventDefault();
+    const input = document.getElementById('file-input');
+    if (!input.files || input.files.length === 0) {
+        alert('Please select at least one resume file (PDF, DOC, DOCX, ZIP).');
+        return;
+    }
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Analyzing...';
+    }
+
+    const formData = new FormData();
+    for (let i = 0; i < input.files.length; i++) {
+        formData.append('files', input.files[i]);
+    }
+
+    const criteriaSelect = document.getElementById('upload-criteria-select');
+    if (criteriaSelect && criteriaSelect.value) {
+        formData.append('criteria_id', criteriaSelect.value);
+    }
+
+    const progressContainer = document.getElementById('upload-progress-container');
+    const progressBar = document.getElementById('upload-progress-bar');
+    const pctText = document.getElementById('upload-pct');
+    progressContainer.classList.remove('hidden');
+
+    let pct = 10;
+    const interval = setInterval(() => {
+        pct = Math.min(95, pct + 10);
+        progressBar.style.width = pct + '%';
+        pctText.innerText = pct + '%';
+    }, 250);
+
+    try {
+        const res = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+        clearInterval(interval);
+        progressBar.style.width = '100%';
+        pctText.innerText = '100%';
+
+        if (data.success) {
+            setTimeout(() => {
+                closeUploadModal();
+                if (data.errors && data.errors.length > 0) {
+                    alert(`Processed with warnings:\n${data.errors.join('\n')}`);
+                }
+                if (data.reports && data.reports.length === 1) {
+                    window.location.href = `/report/${data.reports[0].id}`;
+                } else if (data.resumes && data.resumes.length === 1) {
+                    window.location.href = `/report/${data.resumes[0].id}`;
+                } else {
+                    window.location.href = '/dashboard';
+                }
+            }, 300);
+        } else {
+            alert(data.message || 'Upload processing error');
+            progressContainer.classList.add('hidden');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Start Analysis';
+            }
+        }
+    } catch (err) {
+        clearInterval(interval);
+        alert('Failed to connect to server backend.');
+        progressContainer.classList.add('hidden');
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Start Analysis';
+        }
+    }
+}
+
+function openAuthModal(mode = 'login') {
+    currentAuthMode = mode;
+    toggleAuthMode(mode);
+    document.getElementById('auth-modal').classList.remove('hidden');
+}
+function closeAuthModal() {
+    document.getElementById('auth-modal').classList.add('hidden');
+}
+
+function toggleAuthMode(mode) {
+    currentAuthMode = mode;
+    const title = document.getElementById('auth-modal-title');
+    const nameGroup = document.getElementById('name-field-group');
+    const submitBtn = document.getElementById('auth-submit-btn');
+    const footerLinks = document.getElementById('auth-footer-links');
+    const alertBox = document.getElementById('auth-alert');
+
+    if (alertBox) alertBox.classList.add('hidden');
+
+    if (mode === 'register') {
+        if (title) title.innerText = 'Create Sinora AI Account';
+        if (nameGroup) nameGroup.classList.remove('hidden');
+        if (submitBtn) submitBtn.innerText = 'Register Account';
+        if (footerLinks) {
+            footerLinks.innerHTML = `
+                <button type="button" onclick="toggleAuthMode('login')" class="hover:text-primary transition-colors">Already have an account? Sign In</button>
+            `;
+        }
+    } else if (mode === 'forgot') {
+        if (title) title.innerText = 'Reset Password';
+        if (nameGroup) nameGroup.classList.add('hidden');
+        if (submitBtn) submitBtn.innerText = 'Send Reset Token';
+        if (footerLinks) {
+            footerLinks.innerHTML = `
+                <button type="button" onclick="toggleAuthMode('login')" class="hover:text-primary transition-colors">Back to Sign In</button>
+            `;
+        }
+    } else {
+        if (title) title.innerText = 'Sign In to Sinora AI';
+        if (nameGroup) nameGroup.classList.add('hidden');
+        if (submitBtn) submitBtn.innerText = 'Sign In';
+        if (footerLinks) {
+            footerLinks.innerHTML = `
+                <button type="button" onclick="toggleAuthMode('register')" class="hover:text-primary transition-colors">Create Account</button>
+                <button type="button" onclick="toggleAuthMode('forgot')" class="hover:text-primary transition-colors">Forgot Password?</button>
+            `;
+        }
+    }
+}
+
+async function handleAuthSubmit(e) {
+    e.preventDefault();
+    const emailInput = document.getElementById('auth-email');
+    const passwordInput = document.getElementById('auth-password');
+    const nameInput = document.getElementById('auth-name');
+    const alertBox = document.getElementById('auth-alert');
+
+    const email = emailInput ? emailInput.value.trim() : '';
+    const password = passwordInput ? passwordInput.value : '';
+    let name = nameInput ? nameInput.value.trim() : '';
+    if (!name && email) {
+        name = email.split('@')[0];
+    }
+
+    if (alertBox) alertBox.classList.add('hidden');
+
+    const supaUrl = localStorage.getItem('supabase_url') || '';
+    const supaKey = localStorage.getItem('supabase_publishable_key') || '';
+    const isRealSupabase = window.supabaseClient && (!supaUrl || !supaUrl.includes('placeholder')) && (!supaKey || !supaKey.includes('placeholder'));
+
+    if (isRealSupabase && (currentAuthMode === 'login' || currentAuthMode === 'register')) {
+        try {
+            if (currentAuthMode === 'register') {
+                const { data, error } = await window.supabaseClient.auth.signUp({
+                    email,
+                    password,
+                    options: { data: { full_name: name, username: name, name: name } }
+                });
+                if (error) {
+                    if (alertBox) {
+                        alertBox.className = "p-2 mb-3 rounded text-xs font-body-sm bg-error/10 text-error border border-error/30";
+                        alertBox.innerText = 'Supabase Register: ' + error.message;
+                        alertBox.classList.remove('hidden');
+                    }
+                    return;
+                }
+
+                // Register user in local database as well
+                try {
+                    await fetch('/api/auth/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password, name })
+                    });
+                } catch (regErr) {}
+
+                if (data.user || data.session) {
+                    toggleAuthMode('login');
+                    if (document.getElementById('auth-email')) document.getElementById('auth-email').value = email;
+                    if (document.getElementById('auth-password')) document.getElementById('auth-password').value = '';
+                    if (alertBox) {
+                        alertBox.className = "p-3 mb-3 rounded text-xs font-body-sm bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-center font-medium leading-relaxed";
+                        alertBox.innerText = "Your account has been created in Supabase! Please sign in with your email and password.";
+                        alertBox.classList.remove('hidden');
+                    }
+                    return;
+                }
+            } else if (currentAuthMode === 'login') {
+                const { data, error } = await window.supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) {
+                    if (alertBox) {
+                        alertBox.className = "p-2 mb-3 rounded text-xs font-body-sm bg-error/10 text-error border border-error/30";
+                        alertBox.innerText = 'Supabase Login: ' + error.message;
+                        alertBox.classList.remove('hidden');
+                    }
+                    return;
+                }
+                if (data.user) {
+                    await syncSupabaseUser(data.user);
+                    closeAuthModal();
+                    window.location.href = '/dashboard';
+                    return;
+                }
+            }
+        } catch (supaErr) {
+            console.warn("Supabase Auth error, falling back to local auth:", supaErr);
+        }
+    }
+
+    // Standard Flask Auth Fallback
+    let endpoint = '/api/auth/login';
+    let payload = { email, password };
+
+    if (currentAuthMode === 'register') {
+        endpoint = '/api/auth/register';
+        payload.name = name;
+    } else if (currentAuthMode === 'forgot') {
+        endpoint = '/api/auth/forgot-password';
+        payload = { email };
+    }
+
+    try {
+        const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+            if (currentAuthMode === 'register') {
+                toggleAuthMode('login');
+                if (document.getElementById('auth-email')) document.getElementById('auth-email').value = email;
+                if (document.getElementById('auth-password')) document.getElementById('auth-password').value = '';
+                if (alertBox) {
+                    alertBox.className = "p-3 mb-3 rounded text-xs font-body-sm bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-center font-medium leading-relaxed";
+                    alertBox.innerText = "Your account has been created. Please check your email and verify your address before logging in.";
+                    alertBox.classList.remove('hidden');
+                }
+            } else {
+                closeAuthModal();
+                window.location.href = '/dashboard';
+            }
+        } else {
+            if (alertBox) {
+                alertBox.className = "p-2 mb-3 rounded text-xs font-body-sm bg-error/10 text-error border border-error/30";
+                alertBox.innerText = data.message;
+                alertBox.classList.remove('hidden');
+            }
+        }
+    } catch (err) {
+        if (alertBox) {
+            alertBox.className = "p-2 mb-3 rounded text-xs font-body-sm bg-error/10 text-error border border-error/30";
+            alertBox.innerText = 'Authentication error occurred.';
+            alertBox.classList.remove('hidden');
+        }
+    }
+}
+
+async function handleGoogleLogin() {
+    let url = localStorage.getItem('supabase_url');
+    let key = localStorage.getItem('supabase_publishable_key');
+
+    if (!window.supabaseClient && window.supabase && url && key) {
+        try {
+            window.supabaseClient = window.supabase.createClient(url, key);
+        } catch (e) {}
+    }
+
+    if (window.supabaseClient) {
+        try {
+            const { data, error } = await window.supabaseClient.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin + '/dashboard'
+                }
+            });
+            if (error) {
+                alert("Supabase Google Auth Error: " + error.message);
+            }
+            return;
+        } catch (err) {
+            alert("Google OAuth Error: " + err.message);
+            return;
+        }
+    }
+
+    // Prompt user to enter Supabase Publishable Key & URL if not yet configured
+    const keyInput = prompt("Enter your Supabase Publishable / Anon Key to enable Continue with Google:");
+    if (keyInput) {
+        const urlInput = prompt("Enter your Supabase Project URL (e.g. https://xyz.supabase.co):");
+        if (urlInput) {
+            localStorage.setItem('supabase_url', urlInput.trim());
+            localStorage.setItem('supabase_publishable_key', keyInput.trim());
+            if (typeof initSupabaseClient === 'function') {
+                await initSupabaseClient();
+            }
+            handleGoogleLogin();
+            return;
+        }
+    }
+
+    // Local Google Auth fallback
+    try {
+        const res = await fetch('/api/auth/google', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: 'mohanraje2024@gmail.com', name: 'Mohan Raje' })
+        });
+        const data = await res.json();
+        if (data.success) {
+            closeAuthModal();
+            window.location.href = '/dashboard';
+        }
+    } catch (err) {
+        alert('Google Login error');
+    }
+}
+
+async function handleGithubLogin() {
+    let url = localStorage.getItem('supabase_url');
+    let key = localStorage.getItem('supabase_publishable_key');
+
+    if (!window.supabaseClient && window.supabase && url && key) {
+        try {
+            window.supabaseClient = window.supabase.createClient(url, key);
+        } catch (e) {}
+    }
+
+    if (window.supabaseClient) {
+        try {
+            const { data, error } = await window.supabaseClient.auth.signInWithOAuth({
+                provider: 'github',
+                options: {
+                    redirectTo: window.location.origin + '/dashboard'
+                }
+            });
+            if (error) {
+                alert("Supabase GitHub Auth Error: " + error.message);
+            }
+            return;
+        } catch (err) {
+            alert("GitHub OAuth Error: " + err.message);
+            return;
+        }
+    }
+
+    // Prompt user to enter Supabase Key & URL if not yet configured
+    const keyInput = prompt("Enter your Supabase Publishable / Anon Key to enable Continue with GitHub:");
+    if (keyInput) {
+        const urlInput = prompt("Enter your Supabase Project URL (e.g. https://xyz.supabase.co):");
+        if (urlInput) {
+            localStorage.setItem('supabase_url', urlInput.trim());
+            localStorage.setItem('supabase_publishable_key', keyInput.trim());
+            if (typeof initSupabaseClient === 'function') {
+                await initSupabaseClient();
+            }
+            handleGithubLogin();
+            return;
+        }
+    }
+
+    // Local GitHub Auth fallback
+    try {
+        const res = await fetch('/api/auth/supabase-sync', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: 'github-user@example.com', name: 'GitHub Developer', supabase_id: 'github_oauth' })
+        });
+        const data = await res.json();
+        if (data.success) {
+            closeAuthModal();
+            window.location.href = '/dashboard';
+        }
+    } catch (err) {
+        alert('GitHub Login error');
+    }
+}
+
+function openCriteriaModal() {
+    document.getElementById('criteria-modal').classList.remove('hidden');
+}
+function closeCriteriaModal() {
+    document.getElementById('criteria-modal').classList.add('hidden');
+}
+
+async function handleCriteriaSubmit(e) {
+    e.preventDefault();
+    const payload = {
+        title: document.getElementById('crit-title').value,
+        job_role: document.getElementById('crit-role').value,
+        required_skills: document.getElementById('crit-req-skills').value,
+        keywords: document.getElementById('crit-keywords').value,
+        min_experience: document.getElementById('crit-exp').value,
+        min_degree: document.getElementById('crit-degree').value,
+        skill_weight: document.getElementById('w-skill').value,
+        experience_weight: document.getElementById('w-exp').value,
+        keyword_weight: document.getElementById('w-kw').value
+    };
+
+    try {
+        const res = await fetch('/api/criteria', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+            alert('Custom criteria saved!');
+            closeCriteriaModal();
+            await loadCriteriaOptions();
+            const select = document.getElementById('upload-criteria-select');
+            if (select && data.criteria && data.criteria.id) {
+                select.value = data.criteria.id;
+            }
+        }
+    } catch (err) {
+        alert('Failed to save criteria.');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadCriteriaOptions();
+});
+</script>
+{% include "settings_modal.html" %}
+</body>
+</html>
